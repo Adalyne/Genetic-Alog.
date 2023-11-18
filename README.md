@@ -24,6 +24,9 @@ GA主要求最佳化解。
 單點交配 :
 ![Image](https://github.com/Adalyne/GeneticAlog./blob/55f1fd966fe60876e2fe97e4fd3ee510de943296/Image/%E5%96%AE%E9%BB%9E%E4%BA%A4%E9%85%8D.png)  
 雙點交配
+![Image](https://github.com/Adalyne/Genetic-Alog./blob/c55821212283a2a1ea25c3b21e6a91865ed3f6be/Image/%E9%9B%99%E9%BB%9E%E4%BA%A4%E9%85%8D.png)
+均勻交配
+
 
 6. 邊界處理 : 若超出定範圍直接拉回邊界。
 7. Mutation : 首先要定義一突變率（Mutation rate），於過程中均勻分配產生一機率值，機率值小於突變率則需進行突變。這裡的突變是選兩個bit進行交換。
