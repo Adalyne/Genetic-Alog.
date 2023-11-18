@@ -18,5 +18,9 @@ GA主要求最佳化解。
 **步驟**  
 1. Initial population : 在給定範圍內初始化染色體及族群大小。
 2. Fitness : 對染色體進行計算，fitness越小(誤差越小)表示染色體的基因優良，將來在Selection上選取優良的基因會越高。
-3. Selection : 選出那些染色體進行交配，通常採用輪盤法（Roulette wheel）來選取菁英個體。輪盤法是一種回放式隨機取樣法，將一輪盤分成 N 個部分，根據 fitness 決定其盤面面積大小，fitness 越佳面積就越大，故在隨機取樣中被選到的機會就會越大。此部分會從初始群集中篩選出 n 組最佳 chromosome 當做父代。
-4. 
+3. Selection : 選出那些染色體進行交配，通常採用`輪盤法（Roulette wheel）`來選取菁英個體。輪盤法是一種回放式隨機取樣法，將一輪盤分成 N 個部分，根據 fitness 決定其盤面面積大小，fitness 越佳面積就越大，故在隨機取樣中被選到的機會就會越大。此部分會從初始群集中篩選出 n 組最佳 chromosome 當做父代。
+![Image](https://github.com/Adalyne/Genetic-Alog./blob/312d4f908b6bc644be7211cfb595a6cf3a4a2ebd/Image/%E8%BC%AA%E7%9B%A4%E6%B3%95.png)
+4. Crossover : 先定義交配率，隨後以均勻分配產生一機率值，機率值小於交配率則需進行交配。採用交配方法為單點交配（One-point crossover）、雙點交配、均勻交配。
+單點交配 :  
+6. 邊界處理 : 若超出定範圍直接拉回邊界。
+7. Mutation : 首先要定義一突變率（Mutation rate），於過程中均勻分配產生一機率值，機率值小於突變率則需進行突變。這裡的突變是選兩個bit進行交換。
