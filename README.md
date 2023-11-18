@@ -22,7 +22,7 @@ GA主要求最佳化解。
 ![Image](https://github.com/Adalyne/Genetic-Alog./blob/312d4f908b6bc644be7211cfb595a6cf3a4a2ebd/Image/%E8%BC%AA%E7%9B%A4%E6%B3%95.png)  
 4. Crossover : 先定義交配率，隨後以均勻分配產生一機率值，機率值小於交配率則需進行交配。採用交配方法為單點交配（One-point crossover）、雙點交配、均勻交配。
 單點交配 :
-![Image](https://github.com/Adalyne/Genetic-Alog./blob/55f1fd966fe60876e2fe97e4fd3ee510de943296/Image/%E5%96%AE%E9%BB%9E%E4%BA%A4%E9%85%8D.png)  
+![Image](https://github.com/Adalyne/Genetic-Alog./blob/55f1fd966fe60876e2fe97e4fd3ee510de943296/Image/%E5%96%AE%E9%BB%9E%E4%BA%A4%E9%85%8D.png=100x200)  
 雙點交配
 
 6. 邊界處理 : 若超出定範圍直接拉回邊界。
