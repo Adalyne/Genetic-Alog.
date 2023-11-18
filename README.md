@@ -21,12 +21,12 @@ GA主要求最佳化解。
 3. Selection : 選出那些染色體進行交配，通常採用`輪盤法（Roulette wheel）`來選取菁英個體。輪盤法是一種回放式隨機取樣法，將一輪盤分成 N 個部分，根據 fitness 決定其盤面面積大小，fitness 越佳面積就越大，故在隨機取樣中被選到的機會就會越大。此部分會從初始群集中篩選出 n 組最佳 chromosome 當做父代。
 ![Image](https://github.com/Adalyne/Genetic-Alog./blob/312d4f908b6bc644be7211cfb595a6cf3a4a2ebd/Image/%E8%BC%AA%E7%9B%A4%E6%B3%95.png)  
 4. Crossover : 先定義交配率，隨後以均勻分配產生一機率值，機率值小於交配率則需進行交配。採用交配方法為單點交配（One-point crossover）、雙點交配、均勻交配。
-單點交配 :
+單點交配  
 ![Image](https://github.com/Adalyne/GeneticAlog./blob/55f1fd966fe60876e2fe97e4fd3ee510de943296/Image/%E5%96%AE%E9%BB%9E%E4%BA%A4%E9%85%8D.png)  
-雙點交配
-![Image](https://github.com/Adalyne/Genetic-Alog./blob/c55821212283a2a1ea25c3b21e6a91865ed3f6be/Image/%E9%9B%99%E9%BB%9E%E4%BA%A4%E9%85%8D.png)
-均勻交配
-
+雙點交配  
+![Image](https://github.com/Adalyne/Genetic-Alog./blob/c55821212283a2a1ea25c3b21e6a91865ed3f6be/Image/%E9%9B%99%E9%BB%9E%E4%BA%A4%E9%85%8D.png)  
+均勻交配  
+![Image](https://github.com/Adalyne/Genetic-Alog./blob/5acf3806f071bfd6c87ae7cf43ac9276ab26aacc/Image/%E5%9D%87%E5%8B%BB%E4%BA%A4%E9%85%8D.png)  
 
 6. 邊界處理 : 若超出定範圍直接拉回邊界。
 7. Mutation : 首先要定義一突變率（Mutation rate），於過程中均勻分配產生一機率值，機率值小於突變率則需進行突變。這裡的突變是選兩個bit進行交換。
