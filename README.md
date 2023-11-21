@@ -125,7 +125,6 @@ def Selection(self, pop_bin, fitness):
                 parent = select_bin[random.randint(0,self.N)-1]
                 Parents.append(parent)
         else:
-            #print('sum of fitness=',sum(fitness))
             wheel = [(1 - (fit_num/sum(fitness1)))/(self.N-1) for fit_num in fitness1]
             tep = 0
             Cumulist = list()
@@ -175,7 +174,6 @@ def Crossover(self, Parents):
         if(z1<self.cr):
             z2 = random.randint(0,self.B-3)
             z3 = random.randint(z2,self.B-2)
-            #print('index=', z2)
             child1 = list()
             child2 = list()
             for i in range(self.D):
