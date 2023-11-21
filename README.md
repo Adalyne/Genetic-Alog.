@@ -108,3 +108,146 @@ def fitness(self, pop):
             fit_list.append(fit**2)
         return fit_list
 ```
+**步驟4**  
+Selection : 每次用`輪盤法`選出兩條染色體進行交配  
+如何製作輪盤?  
+1. 將finess_map的數全部相加
+2. 1-(每個fitness_map/sum(fitness_map)) ， 這個公式表示越小的fitness在輪盤上的面積會越大
+3. 然後正規化，將值對應到(0,1)中後，用累加的方式加入wheel list輪盤中
+4. 以上就是輪盤的作法，然後在random(0-1)的數決定是在哪個區間
+```ruby
+def Selection(self, pop_bin, fitness):
+        select_bin = pop_bin.copy()
+        fitness1 = fitness.copy()
+        Parents = list()
+        if sum(fitness) == 0:
+            for i in range(self.n):
+                parent = select_bin[random.randint(0,self.N)-1]
+                Parents.append(parent)
+        else:
+            #print('sum of fitness=',sum(fitness))
+            wheel = [(1 - (fit_num/sum(fitness1)))/(self.N-1) for fit_num in fitness1]
+            #print('wheel=',wheel)
+            tep = 0
+            Cumulist = list()
+            Cumulist.append(tep)
+            for i in range(len(wheel)):
+                tep += wheel[i]
+                Cumulist.append(tep)
+            #print('Cumulist=',Cumulist)
+            for i in range(self.n):
+                z1 = random.uniform(0,1)
+                #print('z1=',z1)
+                for pick in range(len(Cumulist)-1):
+                    if Cumulist[pick] <= z1 < Cumulist[pick+1]:
+                        parent = select_bin[wheel.index(wheel[pick])]
+                Parents.append(parent)
+        return Parents
+```
+**步驟5**  
+Crossover：我選擇的是`雙點交配`, 每次選擇兩組染色體進行交配   
+交配率設0.9，若小於0.9代表交配成功  
+交配完的children若超出限制，則拉回邊界線上  
+Mutation : 10%的突變率讓染色體內兩個bit交換，若超出邊界則拉回邊界上    
+```ruby
+def Mutation(self, Children):
+        mr_children = list()
+        for child in Children:
+            z1 = random.uniform(0,1)
+            #print('mr=',z1)
+            if(z1<0.1):
+                element_index1 = random.randint(0,self.B-1)
+                element_index2 = random.randint(0,self.B-1)
+                #print('exchange index = (',element_index1,element_index2,')')
+                temp = child[element_index1]
+                child[element_index1] = child[element_index2]
+                child[element_index2] = temp
+            mr_children.append(child)
+        return mr_children
+
+def Crossover(self, Parents):
+        #crossover
+        def swap_gene(p1, p2, index1, index2):
+            temp = p1[index1:index2]
+            p1[index1:index2] = p2[index1:index2]
+            p2[index1:index2] = temp
+            #print('p1=',p1,'p2=',p2)
+            return p1, p2
+        parents = Parents.copy()
+        z1 = random.uniform(0,1)   #雖機生成交配率
+        #print('cr z1=',z1)
+        if(z1<self.cr):
+            z2 = random.randint(0,self.B-3)
+            z3 = random.randint(z2,self.B-2)
+            #print('index=', z2)
+            child1 = list()
+            child2 = list()
+            for i in range(self.D):
+                ch1, ch2 = swap_gene(Parents[0][i], Parents[1][i], z2, z3)
+                child1.append(ch1)
+                child2.append(ch2)
+            parents = list()
+            #print('Crossover=',child1,child2)
+            child1 = self.Restrict(child1)
+            child2 = self.Restrict(child2)
+            #print('Restrict=',child1,child2)
+            #Mutation
+            child1 = self.Mutation(child1)
+            child2 = self.Mutation(child2)
+            #print('Mutation=',child1,child2)
+            child1 = self.Restrict(child1)
+            child2 = self.Restrict(child2)
+
+            parents.append(child1)
+            parents.append(child2)
+
+        return parents
+```
+**步驟6**   
+撰寫主程式
+```ruby
+def main():
+    ga = GeneticAlogorithn()
+    print('Population Size=',ga.N,' Population Dimension=',ga.D,' Bit Diamention=', ga.B)
+    #initial
+    pop_dec = ga.generationPopulation()
+    print('dec population=',pop_dec)
+
+    #encoding
+    pop_bin = list()
+    for i in range(ga.N):
+        chrom_cv=list()
+        for j in range(ga.D):
+            chrom_cv.append(ga.D2B(pop_dec[i][j]))
+        pop_bin.append(chrom_cv)
+    print('bin populaation=',pop_bin)
+
+    #fitness
+    fitness_map = ga.fitness(pop_dec)
+    print('fitness map=', fitness_map)
+
+    best_rvlist = list()
+    for e in range(ga.max_iter):
+        best_fitness = min(fitness_map)
+        print('i=',e,'best fitness=', best_fitness)
+        best_rvlist.append(best_fitness)
+        Parents = ga.Selection(pop_bin, fitness_map)
+        Children = ga.Crossover(Parents)
+        pop_bin.append(Children[0])
+        pop_bin.append(Children[1])
+        for i in range(len(Children)):
+            child = list()
+            for j in range(ga.D):
+                child.append(ga.B2D(Children[i][j]))
+            pop_dec.append(child)
+
+        fitness_map = ga.fitness(pop_dec)
+        for i in range(len(Children)):
+            worst_fitness = max(fitness_map)
+            pop_dec.pop(fitness_map.index(worst_fitness))
+            pop_bin.pop(fitness_map.index(worst_fitness))
+            fitness_map.pop(fitness_map.index(worst_fitness))
+
+if __name__ == '__main__':
+    main()
+```
