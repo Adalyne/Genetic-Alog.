@@ -127,17 +127,15 @@ def Selection(self, pop_bin, fitness):
         else:
             #print('sum of fitness=',sum(fitness))
             wheel = [(1 - (fit_num/sum(fitness1)))/(self.N-1) for fit_num in fitness1]
-            #print('wheel=',wheel)
             tep = 0
             Cumulist = list()
             Cumulist.append(tep)
             for i in range(len(wheel)):
                 tep += wheel[i]
                 Cumulist.append(tep)
-            #print('Cumulist=',Cumulist)
+
             for i in range(self.n):
                 z1 = random.uniform(0,1)
-                #print('z1=',z1)
                 for pick in range(len(Cumulist)-1):
                     if Cumulist[pick] <= z1 < Cumulist[pick+1]:
                         parent = select_bin[wheel.index(wheel[pick])]
@@ -154,11 +152,9 @@ def Mutation(self, Children):
         mr_children = list()
         for child in Children:
             z1 = random.uniform(0,1)
-            #print('mr=',z1)
             if(z1<0.1):
                 element_index1 = random.randint(0,self.B-1)
                 element_index2 = random.randint(0,self.B-1)
-                #print('exchange index = (',element_index1,element_index2,')')
                 temp = child[element_index1]
                 child[element_index1] = child[element_index2]
                 child[element_index2] = temp
@@ -171,8 +167,8 @@ def Crossover(self, Parents):
             temp = p1[index1:index2]
             p1[index1:index2] = p2[index1:index2]
             p2[index1:index2] = temp
-            #print('p1=',p1,'p2=',p2)
             return p1, p2
+
         parents = Parents.copy()
         z1 = random.uniform(0,1)   #雖機生成交配率
         #print('cr z1=',z1)
@@ -187,14 +183,16 @@ def Crossover(self, Parents):
                 child1.append(ch1)
                 child2.append(ch2)
             parents = list()
-            #print('Crossover=',child1,child2)
+
+            #Restrict
             child1 = self.Restrict(child1)
             child2 = self.Restrict(child2)
-            #print('Restrict=',child1,child2)
+
             #Mutation
             child1 = self.Mutation(child1)
             child2 = self.Mutation(child2)
-            #print('Mutation=',child1,child2)
+
+            #Restrict
             child1 = self.Restrict(child1)
             child2 = self.Restrict(child2)
 
