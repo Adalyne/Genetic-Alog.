@@ -147,6 +147,22 @@ Crossover：我選擇的是`雙點交配`, 每次選擇兩組染色體進行交�
 交配完的children若超出限制，則拉回邊界線上  
 Mutation : 10%的突變率讓染色體內兩個bit交換，若超出邊界則拉回邊界上    
 ```ruby
+def Restrict(self,bit_map):
+        X, Y, Z = bit_map
+        if self.B2D(X)<-60:
+            bit_map[0] = self.D2B(-60)
+        elif self.B2D(X)>60:
+            bit_map[0] = self.D2B(60)
+        elif self.B2D(Y)<-50:
+            bit_map[1] = self.D2B(-50)
+        elif self.B2D(Y)>50:
+            bit_map[1] = self.D2B(50)
+        elif self.B2D(Z)<-70:
+            bit_map[2] = self.D2B(-70)
+        elif self.B2D(Z)>70:
+            bit_map[2] = self.D2B(70)
+        return bit_map
+
 def Mutation(self, Children):
         mr_children = list()
         for child in Children:
